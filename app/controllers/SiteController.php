@@ -29,6 +29,7 @@ class SiteController extends FM\BaseController{
 			'totalNewsNumber' => $totalNewsNumber,
 			'News' => $News,
 			'Pagination' => $Pagination,
+			'newsOnPage' => 10,
 		],
 		!Application::$i->Input->isAjax());
 	}
