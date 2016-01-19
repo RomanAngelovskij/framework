@@ -2,7 +2,6 @@
 namespace FM;
 
 class Component{
-	private $__Data;
 
 	public function __construct(){
 
@@ -13,10 +12,6 @@ class Component{
 
 		if (method_exists($this, $getterName)){
 			return $this->$getterName();
-		}
-
-		if (isset($this->__Data[$name])){
-			return $this->__Data[$name];
 		}
 
 		if (method_exists($this, 'set' . $getterName)) {
@@ -40,6 +35,16 @@ class Component{
 		} else {
 			throw new \Exception('Setting unknown property: ' . get_class($this) . '::' . $name);
 		}
+	}
+
+	public function __isset($name)
+	{
+		$getterMethod = 'get' . $name;
+		if (method_exists($this, $getterMethod)) {
+			return $this->$getterMethod() !== null;
+		}
+
+		return !empty($this->__Data[$name]);
 	}
 
 	final public function addEventListener(){
