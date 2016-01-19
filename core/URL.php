@@ -1,7 +1,7 @@
 <?php
 namespace FM;
 
-class URL{
+class URL extends Component{
 	public function parts($index = null){
 		$Parts = explode('/', ltrim(explode('?', $_SERVER['REQUEST_URI'])[0], '/'));
 

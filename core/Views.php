@@ -1,7 +1,7 @@
 <?php
 namespace FM;
 
-class Views{
+class Views extends Component{
 	private $__Variables = [];
 
 	private $__viewFolder = 'views';

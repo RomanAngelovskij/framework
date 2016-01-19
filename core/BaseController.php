@@ -1,7 +1,7 @@
 <?php
 namespace FM;
 
-class BaseController{
+class BaseController extends Component{
 
 	public function __construct(){
 

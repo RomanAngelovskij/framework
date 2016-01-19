@@ -1,7 +1,7 @@
 <?php
 namespace FM;
 
-class Routes{
+class Routes extends Component{
 	private $__controller;
 
 	private $__action;
@@ -9,7 +9,7 @@ class Routes{
 	private $__currentRule;
 
 	public function __construct(){
-
+		$this->addEventListener();
 	}
 
 	/**

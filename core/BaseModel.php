@@ -1,7 +1,7 @@
 <?php
 namespace FM;
 
-class BaseModel{
+class BaseModel extends Component{
 	private $__Variables = [];
 
 	public function __construct(){
