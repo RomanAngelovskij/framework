@@ -1,7 +1,9 @@
 <?php
 namespace FM\db;
 
-class Connection{
+use FM\Component;
+
+class Connection extends Component{
 	private  $__pdo;
 
 	private $__dsn;

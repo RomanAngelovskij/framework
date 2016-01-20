@@ -47,6 +47,11 @@ class Component{
 		return !empty($this->__Data[$name]);
 	}
 
+	public function __call($name, $params)
+	{
+		throw new \Exception('Calling unknown method: ' . get_class($this) . "::$name()");
+	}
+
 	final public function addEventListener(){
 
 	}

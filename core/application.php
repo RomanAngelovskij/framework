@@ -35,23 +35,32 @@ class Application{
 			$e->getMessage();
 		}
 
-		self::$i->Input = new Input;
-		self::$i->URL = new URL();
-		self::$i->Routes = new Routes();
-		self::$i->Views = new Views();
+		$this->registerComponent(new Input());
+		$this->registerComponent(new URL());
+		$this->registerComponent(new Routes());
+		$this->registerComponent(new Views());
 
 		self::$i->Routes->processRoutes();
 
-		self::$i->dbConnection = new Connection(
+		$this->registerComponent(new Connection(
 			self::$i->Config['db']['dsn'],
 			self::$i->Config['db']['username'],
 			self::$i->Config['db']['password'],
 			self::$i->Config['db']['charset']
-		);
+		), 'dbConnection');
 
 		self::$i->dbConnection->open();
 
 		$this->__callAction();
+	}
+
+	public function registerComponent(Component $component, $name = ''){
+		if (empty($name)){
+			$Reflection = new \ReflectionClass($component);
+			$name = substr(strrchr($Reflection->getName(), "\\"), 1);
+		}
+
+		self::$i->$name = $component;
 	}
 
 	private function __setupConfig($Config){
