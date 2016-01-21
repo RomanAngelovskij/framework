@@ -41,7 +41,11 @@ class mysql implements DBDriverInterface{
 	 *
 	 * @return $this mysql driver instance
 	 */
-	public function createCommand($command, $Params = []){
+	public function createCommand($command, $tableName, $Params = []){
+		$this->__initCommand();
+
+		$this->useTable($tableName);
+
 		$method = '__' . strtolower($command) . 'Query';
 		$this->$method($Params);
 
@@ -78,9 +82,15 @@ class mysql implements DBDriverInterface{
 		}
 
 		$bindName = $this->__addBind($field, $value);
+
 		if (!empty($this->__Command['condition']) && $concat == ''){
 			$concat = 'AND';
 		}
+
+		if (empty($this->__Command['condition'])){
+			$concat = '';
+		}
+
 		$this->__Command['condition'][] = $concat . ' `' . $field . '` ' . $sign . ' :' . $bindName;
 
 		return $this;
@@ -178,8 +188,6 @@ class mysql implements DBDriverInterface{
 			default:
 		}
 
-		$this->__initCommand();
-
 		return $result;
 	}
 
@@ -204,16 +212,12 @@ class mysql implements DBDriverInterface{
 		$limit = $this->__makeLimit();
 
 		$sql = implode(' ', $this->__Command) . $limit;
-
+echo $sql;
 		$sth = Application::$i->dbConnection->pdo()->prepare($sql);
 
 		$sth->execute($this->__Binds);
 
-		if ($initCommand === true){
-			$this->__initCommand();
-		} else {
-			$this->__Command['condition'] = $Condition;
-		}
+		$this->__Command['condition'] = $Condition;
 
 		$mode = $returnArray === false ? \PDO::FETCH_CLASS : \PDO::FETCH_ASSOC;
 

@@ -20,10 +20,17 @@ class DBModel extends BaseModel{
 
 	private $__tableName;
 
-	public function __construct(){
+	private $__DataSet;
+
+	public function __construct($condition = []){
 		$this->db = Application::$i->dbConnection;
 
 		$this->__tableName = static::tableName();
+
+		if (!empty($condition)){
+			$this->__DataSet = $this->select($condition)->get();
+			var_dump_pre($this->__DataSet);
+		}
 	}
 
 	/**
@@ -47,8 +54,7 @@ class DBModel extends BaseModel{
 	 */
 	public function select($Condition = []){
 		$result = $this->db->driver()
-			->useTable(static::tableName())
-			->createCommand('select', $Condition);
+			->createCommand('select', static::tableName(), $Condition);
 
 		return $this;
 	}
@@ -62,8 +68,7 @@ class DBModel extends BaseModel{
 	 */
 	public function insert($Data){
 		$insertId = $this->db->driver()
-			->useTable(static::tableName())
-			->createCommand('insert', $Data)
+			->createCommand('insert', static::tableName(), $Data)
 			->execute();
 
 		return (int) $insertId;
@@ -80,7 +85,7 @@ class DBModel extends BaseModel{
 	public function update($Data){
 		$result = $this->db->driver()
 			->useTable(static::tableName())
-			->createCommand('update', $Data);
+			->createCommand('update', static::tableName(), $Data);
 
 		return $this;
 	}

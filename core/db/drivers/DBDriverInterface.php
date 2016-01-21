@@ -3,7 +3,7 @@ namespace FM\db\drivers;
 
 interface DBDriverInterface{
 
-	public function createCommand($command, $Params = []);
+	public function createCommand($command, $tableName, $Params = []);
 
 	public function useTable($tableName);
 

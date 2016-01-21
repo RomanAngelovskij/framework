@@ -3,7 +3,7 @@ error_reporting(-1);
 ini_set('display_errors', 1);
 
 define('DS', '/');
-define('ROOT_DIR', __DIR__);
+define('ROOT_DIR', __DIR__ . '/../');
 define('CORE_FOLDER', 'core');
 define('APP_FOLDER', 'app');
 
@@ -46,6 +46,3 @@ try{
 } catch (Exception $e) {
 	showError($e->getMessage());
 }
-
-
-//FM\Application::$i->URL->parts();

@@ -5,6 +5,7 @@ use FM;
 use FM\Application;
 use app\models\News;
 use app\models\Pages;
+use app\models\Test;
 
 class SiteController extends FM\BaseController{
 
@@ -32,5 +33,9 @@ class SiteController extends FM\BaseController{
 			'newsOnPage' => 10,
 		],
 		!Application::$i->Input->isAjax());
+	}
+
+	public function actionTest(){
+		$TestModel = new Test(['id' => 1]);
 	}
 }
